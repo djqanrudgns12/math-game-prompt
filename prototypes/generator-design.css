@@ -66,12 +66,12 @@ main { width: min(1280px, 100%); margin: auto; padding: 32px 40px 72px; }
 .steps { min-width: 0; }
 .step { overflow: hidden; margin: 0 0 20px; padding: 0 28px 30px; border: 1px solid var(--line); border-radius: 17px; background: var(--surface); box-shadow: var(--shadow); }
 .step-title { display: flex; align-items: center; gap: 12px; margin: 0 -28px; padding: 20px 28px; border-bottom: 1px solid #dce8e5; background: linear-gradient(90deg, var(--brand-soft), #f9fcfb 72%); }
-.step:nth-child(2) .step-title { border-color: #dce5f7; background: linear-gradient(90deg, var(--blue-soft), #fbfcff 72%); }
-.step:nth-child(3) .step-title { border-color: #f1dfd2; background: linear-gradient(90deg, var(--orange-soft), #fffbf8 72%); }
+.class-card .step-title { border-color: #dce5f7; background: linear-gradient(90deg, var(--blue-soft), #fbfcff 72%); }
+.theme-card .step-title { border-color: #f1dfd2; background: linear-gradient(90deg, var(--orange-soft), #fffbf8 72%); }
 .step-title h2 { flex: 1; }
 .num { display: grid; place-items: center; width: 36px; height: 27px; border-radius: 8px; color: #fff; background: var(--brand); font-size: 12px; font-weight: 800; letter-spacing: .5px; font-variant-numeric: tabular-nums; }
-.step:nth-child(2) .num { background: var(--blue); }
-.step:nth-child(3) .num { background: var(--orange); }
+.class-card .num { background: var(--blue); }
+.theme-card .num { background: var(--orange); }
 .step > p { margin: 20px 0; color: var(--muted); }
 
 .game-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
@@ -131,7 +131,7 @@ details .controls { margin-top: 16px; padding: 20px; border-radius: 12px; backgr
 .copy-block { margin-bottom: 2px; }
 .copy-reminder { display: grid; gap: 4px; margin-bottom: 11px; padding: 11px 12px; border: 1px solid #efd2bc; border-radius: 11px; background: #fff8f2; line-height: 1.45; }
 .copy-reminder strong { width: max-content; padding: 3px 7px; border-radius: 999px; color: #fff; background: #bd5226; font-size: 10px; font-weight: 800; letter-spacing: .3px; }
-.copy-reminder span { color: #724127; font-size: 12px; font-weight: 650; }
+.copy-reminder span { color: #724127; font-size: 12px; font-weight: 700; }
 .primary { width: 100%; min-height: 54px; border-color: var(--brand-deep); color: #fff; background: linear-gradient(135deg, #087b69, #075b51); box-shadow: 0 10px 20px rgba(8, 123, 105, .18); font-size: 16px; font-weight: 750; }
 .primary:hover { border-color: #064a42; color: #fff; background: linear-gradient(135deg, #096f61, #064a42); box-shadow: 0 12px 24px rgba(8, 123, 105, .24); }
 .next-steps { margin: 0; padding: 17px 0 12px; list-style: none; }
@@ -155,8 +155,9 @@ dialog::backdrop { background: rgba(12, 34, 31, .48); backdrop-filter: blur(3px)
 .catalog-grid .game strong { font-size: 17px; }
 .catalog-title { margin: 18px 0 10px; color: var(--muted); font-size: 16px; }
 dialog textarea { min-height: 280px; margin: 12px 0; font-size: 15px; line-height: 1.8; }
-.dialog-file-reminder { margin: 0 0 12px; padding: 10px 12px; border-left: 3px solid var(--orange); border-radius: 7px; color: #724127; background: var(--orange-soft); font-size: 14px; }
-.dialog-file-reminder strong { margin-right: 5px; color: #a3451b; }
+.dialog-file-reminder { display: grid; gap: 3px; margin: 0 0 12px; padding: 10px 12px; border-left: 3px solid var(--orange); border-radius: 7px; color: #724127; background: var(--orange-soft); font-size: 14px; }
+.dialog-file-reminder strong { color: #a3451b; }
+.dialog-file-reminder span { font-weight: 700; }
 .help-steps { padding-left: 24px; }
 .help-steps li { padding: 8px 0; line-height: 1.8; }
 a { color: var(--brand); }
@@ -239,7 +240,7 @@ a { color: var(--brand); }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
 /* Clear, tactile choices with restrained color and a consistent spacing scale. */
 .step-title { background: #fff; border-bottom: 0; padding-bottom: 8px; padding-top: 26px; }
-.step:nth-child(2) .step-title, .step:nth-child(3) .step-title { background: #fff; }
+.class-card .step-title, .theme-card .step-title { background: #fff; }
 .num { width: 34px; height: 34px; border-radius: 12px; }
 .step > p { margin-top: 12px; }
 .game-list { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; }
@@ -256,7 +257,7 @@ a { color: var(--brand); }
 .expand-games { margin: 10px 0 2px; border: 1px dashed #b8cdc6; border-radius: 12px; }
 .game-detail { background: #f4f8f6; border: 0; border-radius: 14px; padding: 18px; }
 .controls { gap: 20px 16px; }
-.step:nth-child(2) > .controls { padding: 20px; border: 1px solid #e4eaf5; border-radius: 16px; background: #f8faff; }
+.class-card > .controls { padding: 20px; border: 1px solid #e4eaf5; border-radius: 16px; background: #f8faff; }
 .controls select { background-color: #fff; border-color: #c1cddd; border-radius: 12px; }
 .segments { gap: 4px; padding: 4px; border-radius: 14px; background: #eaf0f8; }
 .segments button { border: 1px solid transparent; border-radius: 10px; background: transparent; }
@@ -268,8 +269,54 @@ a { color: var(--brand); }
 @media(max-width:600px) {
  .game-list { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
  .game { min-height:100px; padding:12px; gap:8px; }
- .step:nth-child(2) > .controls { padding:12px; }
+ .class-card > .controls { padding:12px; }
  .segments { gap:2px; padding:3px; }
  #players button { padding:8px 2px; font-size:14px; }
  #levels small { font-size:10px; }
+}
+
+/* Five independent cards, in reading order at every screen size. */
+.card-nav { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 24px; }
+.card-nav a { padding:10px 14px; border:1px solid #cadbd6; border-radius:999px; background:#fff; font-size:14px; font-weight:700; text-decoration:none; }
+.card-nav a:hover { background:var(--brand-soft); }
+.card-nav a:focus-visible { outline:3px solid var(--brand); outline-offset:3px; }
+.workbench { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; }
+.workbench > .step { min-width:0; margin:0; scroll-margin-top:24px; }
+.guide-card, .theme-card, .result-card { grid-column:1 / -1; }
+.guide-card .num { background:#52647e; }
+.result-card .num { background:var(--brand-deep); }
+.guide-card .file-guide { margin:20px 0; }
+.guide-content { color:var(--muted); font-size:14px; }
+.guide-content .help-steps { display:grid; grid-template-columns:1fr 1fr; gap:8px 32px; margin:0 0 12px; }
+.guide-content p { margin:6px 0; }
+.game-card .game-list { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.theme-card .swatches { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.theme-card .selected-design { grid-template-columns:minmax(0,1fr) 260px; }
+.theme-card .design-caption { display:block; }
+.result-grid { display:grid; grid-template-columns:minmax(0, .85fr) minmax(0,1.15fr); gap:28px; }
+.result-card .recipe { display:block; padding:0; border:0; border-radius:0; box-shadow:none; }
+.result-card .recipe::before { display:none; }
+.recipe dd { min-width:0; overflow-wrap:anywhere; white-space:pre-wrap; }
+.prompt-panel { min-width:0; padding:20px; border:1px solid var(--line); border-radius:14px; background:var(--surface-soft); }
+.prompt-panel h3 { font-size:18px; }
+#prompt-text { display:block; min-height:400px; margin:12px 0; font-size:14px; line-height:1.7; background:#fff; }
+.result-card .footer-note { margin-top:20px; }
+@media(max-width:1100px) { .game-card .game-list { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:900px) {
+ .workbench, .result-grid { grid-template-columns:minmax(0,1fr); }
+ .guide-content .help-steps { grid-template-columns:1fr; gap:0; }
+ .game-card .game-list { grid-template-columns:repeat(4,minmax(0,1fr)); }
+ .theme-card .selected-design { grid-template-columns:minmax(0,1fr); }
+}
+@media(max-width:600px) {
+ .workbench { gap:20px; }
+ .card-nav { gap:6px; }
+ .card-nav a { padding:9px 10px; font-size:12px; }
+ .game-card .game-list, .theme-card .swatches { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .step-title { flex-wrap:wrap; gap:10px; }
+ .step-title h2 { font-size:19px; }
+ .theme-card .step-title h2 { flex-basis:calc(100% - 48px); }
+ #theme-open { margin-left:44px; }
+ .prompt-panel { padding:14px; }
+ #prompt-text { min-height:320px; }
 }
