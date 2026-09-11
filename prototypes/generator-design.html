@@ -294,10 +294,33 @@ a { color: var(--brand); }
 .guide-card, .theme-card, .result-card { grid-column:1 / -1; }
 .guide-card .num { background:#52647e; }
 .result-card .num { background:var(--brand-deep); }
-.guide-card .file-guide { margin:20px 0; }
-.guide-content { color:var(--muted); font-size:14px; }
-.guide-content .help-steps { display:grid; grid-template-columns:1fr 1fr; gap:8px 32px; margin:0 0 12px; }
-.guide-content p { margin:6px 0; }
+.guide-card { position:relative; border-color:#dbe4f1; background:linear-gradient(180deg,#fff 0%,#fbfcff 100%); }
+.guide-card::before { content:""; position:absolute; top:0; right:0; width:210px; height:120px; pointer-events:none; background:radial-gradient(circle at top right,rgba(53,103,215,.09),transparent 68%); }
+.guide-card .step-title { position:relative; }
+.guide-card .file-guide { margin:22px 0 24px; padding:18px 20px; border-color:#b9ccef; border-left-width:5px; border-radius:16px; background:linear-gradient(105deg,#edf4ff,#fff 78%); box-shadow:0 9px 24px rgba(53,103,215,.09); }
+.guide-card .file-guide-badge { width:52px; height:52px; border-radius:14px; line-height:1; }
+.guide-card .file-guide-badge strong { color:#fff; font-size:12px; letter-spacing:.5px; }
+.guide-card .file-guide-badge small { margin-top:4px; color:#dce7ff; font-size:10px; font-weight:750; letter-spacing:0; }
+.guide-card .file-guide-copy { min-width:0; }
+.guide-card .file-guide-copy > strong { display:block; margin-bottom:4px; color:#153d8d; font-size:16px; line-height:1.5; }
+.guide-card .file-guide-copy p { margin:0; color:#43536a; font-size:15px; line-height:1.7; }
+.guide-card .file-guide-copy b { color:#203c69; }
+.guide-lede { max-width:900px; margin:12px 0 0 !important; color:#3d4d61 !important; font-size:16px; line-height:1.75; }
+.guide-lede strong { color:#183d7a; font-weight:800; }
+.guide-content { color:#34445a; font-size:16px; }
+.guide-content .help-steps { counter-reset:guide-step; display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:0 0 18px; padding:0; list-style:none; }
+.guide-content .help-steps li { counter-increment:guide-step; display:grid; grid-template-columns:38px minmax(0,1fr); gap:13px; align-items:start; min-height:114px; padding:17px; border:1px solid #dfe6f0; border-radius:15px; background:#fff; box-shadow:0 5px 16px rgba(25,49,82,.055); }
+.guide-content .help-steps li::before { content:counter(guide-step); display:grid; place-items:center; width:36px; height:36px; border-radius:11px; color:#fff; background:#526b92; box-shadow:0 4px 10px rgba(31,56,93,.18); font-size:14px; font-weight:850; }
+.guide-content .help-steps li > div { display:grid; gap:6px; }
+.guide-content .help-steps strong { color:#172b48; font-size:16px; line-height:1.55; }
+.guide-content .help-steps strong b { color:#174fa6; font-weight:850; }
+.guide-content .help-steps span { color:#526278; font-size:15px; line-height:1.7; }
+.guide-content .help-steps span b { color:#2c4262; font-weight:750; }
+.guide-notes { display:grid; grid-template-columns:1.35fr 1fr; gap:12px; }
+.guide-notes article { display:grid; grid-template-columns:auto minmax(0,1fr); gap:12px; align-items:start; padding:15px 16px; border:1px solid #dce7e3; border-radius:14px; background:#f5faf8; }
+.guide-note-label { padding:5px 8px; border-radius:8px; color:#176453; background:#dff3ec; font-size:12px; font-weight:850; white-space:nowrap; }
+.guide-notes p { margin:0; color:#40534f; font-size:14px; line-height:1.7; }
+.guide-notes strong { color:#173f37; }
 .game-card .game-list { grid-template-columns:repeat(4,minmax(0,1fr)); }
 .theme-card .swatches { grid-template-columns:repeat(3,minmax(0,1fr)); }
 .theme-card .selected-design { grid-template-columns:minmax(0,1fr) 260px; }
@@ -313,7 +336,8 @@ a { color: var(--brand); }
 @media(max-width:1100px) { .game-card .game-list { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:900px) {
  .workbench, .result-grid { grid-template-columns:minmax(0,1fr); }
- .guide-content .help-steps { grid-template-columns:1fr; gap:0; }
+ .guide-content .help-steps { grid-template-columns:1fr; gap:10px; }
+ .guide-notes { grid-template-columns:1fr; }
  .game-card .game-list { grid-template-columns:repeat(4,minmax(0,1fr)); }
  .theme-card .selected-design { grid-template-columns:minmax(0,1fr); }
 }
@@ -327,6 +351,17 @@ a { color: var(--brand); }
  .game-card .game-list, .theme-card .swatches { grid-template-columns:repeat(2,minmax(0,1fr)); }
  .step-title { flex-wrap:wrap; gap:10px; }
  .step-title h2 { font-size:19px; }
+ .guide-card::before { width:120px; height:80px; }
+ .guide-lede { font-size:15px; line-height:1.7; }
+ .guide-card .file-guide { gap:12px; padding:15px; }
+ .guide-card .file-guide-badge { width:46px; height:46px; }
+ .guide-card .file-guide-copy > strong { font-size:15px; }
+ .guide-card .file-guide-copy p { font-size:14px; }
+ .guide-content .help-steps li { grid-template-columns:34px minmax(0,1fr); gap:11px; min-height:0; padding:14px; }
+ .guide-content .help-steps li::before { width:32px; height:32px; border-radius:10px; font-size:13px; }
+ .guide-content .help-steps strong { font-size:15px; }
+ .guide-content .help-steps span { font-size:14px; line-height:1.65; }
+ .guide-notes article { grid-template-columns:1fr; gap:8px; padding:14px; }
  .theme-card .step-title h2 { flex-basis:calc(100% - 48px); }
  #theme-open { margin-left:44px; }
  .prompt-panel { padding:14px; }
@@ -338,7 +373,7 @@ a { color: var(--brand); }
 
 <nav class="card-nav" aria-label="제작 단계"><a href="#guide-card">01 사용 안내</a><a href="#game-card">02 게임 유형</a><a href="#class-card">03 수업 조건</a><a href="#theme-card">04 게임 분위기</a><a href="#result-card">05 프롬프트</a></nav>
 <div class="workbench">
-<section class="step guide-card" id="guide-card" aria-labelledby="guide-heading" tabindex="-1"><div class="step-title"><span class="num">01</span><h2 id="guide-heading">사용법 및 유의사항</h2></div><p class="small">아래 카드를 순서대로 선택한 뒤, 마지막 카드에서 프롬프트를 복사하세요. 선택 내용은 바로 반영됩니다.</p><aside class="file-guide" aria-label="활동지 파일 안내"><span class="file-guide-badge" aria-hidden="true">PDF</span><p><strong>활동지는 PDF가 가장 안정적이에요.</strong><span>HWP·HWPX는 PDF로 바꿔서 올려주세요. PNG나 JPG도 되지만, 가급적 PDF로 올려야 합니다.</span></p></aside><div class="guide-content"><ol class="help-steps"><li>게임과 수업 조건을 고르고 프롬프트를 복사하세요.</li><li>ChatGPT 새 대화에서 프롬프트를 붙여 넣고 활동지 사진·PDF 1~2개를 첨부하세요.</li><li>완성된 HTML 파일을 받으세요. 코드로 받았다면 전체를 메모장에 붙이고 UTF-8, 모든 파일 형식으로 <b>game.html</b>을 저장하세요.</li><li>파일을 브라우저로 열고 교사 메뉴의 문제·진행 점검, 정답·오답 후 다음 문제, 터치를 확인하세요. 화면을 확장했다면 창을 칠판 쪽으로 옮겨 주세요.</li></ol><p>프롬프트는 영어로 작성되며 게임의 문제·버튼·설명은 한국어로 제작하도록 요청합니다. 입력 순서, 다음 문제, 재시작 등 진행 검증 지시를 포함합니다.</p><p>학년·차시가 없어도 문제 내용에서 학습 목표를 파악하도록 요청합니다.</p></div></section>
+<section class="step guide-card" id="guide-card" aria-labelledby="guide-heading" tabindex="-1"><div class="step-title"><span class="num">01</span><h2 id="guide-heading">사용법 및 유의사항</h2></div><p class="guide-lede">한 단계씩 선택하고 <strong>다음</strong>을 눌러 주세요. 마지막 단계에서 <strong>프롬프트를 복사</strong>할 수 있으며, 이전 단계로 돌아가도 선택 내용은 유지됩니다.</p><aside class="file-guide" aria-label="활동지 파일 안내"><span class="file-guide-badge" aria-hidden="true"><strong>PDF</strong><small>권장</small></span><div class="file-guide-copy"><strong>활동지는 PDF가 가장 안정적이에요.</strong><p><b>HWP·HWPX</b>는 PDF로 바꿔서 올려주세요. <b>PNG·JPG</b>도 가능하지만, 가급적 PDF를 사용해 주세요.</p></div></aside><div class="guide-content"><ol class="help-steps"><li><div><strong><b>게임과 수업 조건</b>을 고르고 프롬프트를 복사하세요.</strong><span>선택한 내용은 마지막 프롬프트에 자동으로 반영됩니다.</span></div></li><li><div><strong><b>ChatGPT 새 대화</b>에 프롬프트를 붙여 넣으세요.</strong><span>활동지 사진이나 PDF <b>1~2개</b>를 함께 첨부하세요.</span></div></li><li><div><strong>완성된 <b>HTML 파일</b>을 받으세요.</strong><span>코드로 받았다면 전체를 메모장에 붙이고 <b>UTF-8</b>·<b>모든 파일 형식</b>으로 <b>game.html</b>을 저장하세요.</span></div></li><li><div><strong>수업 전에 <b>동작을 반드시 점검</b>하세요.</strong><span>브라우저에서 교사 메뉴의 문제·진행, 정답·오답 후 다음 문제, 터치를 확인하세요. 화면을 확장했다면 창을 칠판 쪽으로 옮겨 주세요.</span></div></li></ol><div class="guide-notes"><article><span class="guide-note-label">게임 언어</span><p>프롬프트는 영어로 작성되지만, 게임의 <strong>문제·버튼·설명은 한국어</strong>로 제작하도록 요청합니다. 입력 순서, 다음 문제, 재시작 등의 진행 검증도 포함합니다.</p></article><article><span class="guide-note-label">학습 목표</span><p><strong>학년·차시 정보가 없어도 괜찮아요.</strong> 문제 내용을 바탕으로 학습 목표를 파악하도록 요청합니다.</p></article></div></div></section>
 <section class="step game-card" id="game-card" aria-labelledby="game-heading"><div class="step-title"><span class="num">02</span><h2 id="game-heading">게임 유형 선택</h2></div><p class="small">장르를 선택하면 학생의 조작 방법과 게임 진행 방식을 확인할 수 있습니다.</p><div class="game-list" id="featured"></div><button class="expand-games" id="games-toggle" aria-expanded="false" aria-controls="featured">게임 유형 더 보기 · 전체 20개</button><div class="game-detail" aria-live="polite"><strong id="detail-name"></strong><p><span>학생 조작</span><span id="detail-action" style="font-weight:400"></span></p><p><span>게임 진행</span><span id="detail-progress" style="font-weight:400"></span></p></div><div class="all-games"><button id="catalog-open">설명으로 게임 찾기</button><button id="novel">새 게임 구상</button></div></section>
 <section class="step class-card" id="class-card" aria-labelledby="class-heading"><div class="step-title"><span class="num">03</span><h2 id="class-heading">수업 조건</h2></div><p class="small">선택한 값으로 시작하며, 완성된 게임에서도 인원·시간·난이도를 변경할 수 있습니다.</p><div class="controls">
 <div class="field full"><span id="players-label">동시 참여 인원</span><div class="segments" id="players" role="group" aria-labelledby="players-label"></div></div>
@@ -499,7 +534,6 @@ const wizardFooter = document.createElement('div');
 wizardFooter.className = 'wizard-footer';
 wizardFooter.innerHTML = '<button id="step-prev" type="button">← 이전</button><p id="step-status" role="status" aria-live="polite"></p><button id="step-next" type="button" class="primary">다음 →</button>';
 document.querySelector('.workbench').after(wizardFooter);
-$('guide-card').querySelector(':scope > p').textContent = '한 단계씩 선택하고 다음을 눌러 주세요. 마지막 단계에서 프롬프트를 복사할 수 있으며, 이전 단계로 돌아가도 선택 내용은 유지됩니다.';
 function showStep(index, focus = true, updateHistory = true) {
   currentStep = Math.max(0, Math.min(wizardCards.length - 1, index));
   wizardCards.forEach((card, i) => { card.hidden = i !== currentStep; card.tabIndex = -1; });

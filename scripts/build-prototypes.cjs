@@ -21,6 +21,8 @@ const bundle=read('prototypes/art-direction.js')+'\n'+read('prototypes/theme-art
 const html=read('prototypes/generator-design.template.html').replace(/<style>[\s\S]*?<\/style>/,()=>'<style>'+read('prototypes/generator-design.css')+'</style>').replace('/*COMPILER*/',()=>bundle);
 fs.writeFileSync(path.join(root,'prototypes/generator-design.html'),html);
 fs.writeFileSync(path.join(root,'index.html'),html);
+fs.mkdirSync(path.join(root,'dist'),{recursive:true});
+fs.writeFileSync(path.join(root,'dist/index.html'),html);
 const make=require('../prototypes/compiler.js');const example=make(data,template).compile({gameId:'match',themeId:'forest',players:4,durationSec:90,mode:'coop'});
 fs.writeFileSync(path.join(root,'docs/example-prompt-coop-match.txt'),example.text+'\n');
 const reference=read('prototypes/input-kernel.js').replace(/if \(typeof module[^\n]*/,'');
