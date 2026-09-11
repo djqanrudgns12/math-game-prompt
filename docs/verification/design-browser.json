@@ -1,0 +1,58 @@
+{
+  "kind": "prototype browser UI, not teacher usability study",
+  "checks": [
+    "product name and requested three-line introduction are exact",
+    "copyright appears once after main content in normal page flow",
+    "8 initial genres expand to 20 and collapse without losing controls",
+    "genre selection preserves keyboard focus",
+    "all 20 genres searchable and selection updates recipe",
+    "participant, mode, duration and game-theme contract propagate to preview and prompt",
+    "12 game-world choices, one HUD scene preview and enlargement work",
+    "free text remains data without HTML execution",
+    "clipboard denial opens complete selectable fallback",
+    "dialog Escape closes and returns focus",
+    "UTF-8 TXT download matches current compiled prompt",
+    "successful clipboard adapter reports success only after promise resolution",
+    "one-player team selection visibly resolves to solo",
+    "all 12 scene descriptions share the visual contract with the compiled prompt",
+    "fixed audio and system motion, explicit wrong-answer penalty and visual requirements reach exported prompt",
+    "six responsive widths including 320 CSS px avoid horizontal overflow and clipped controls",
+    "200 percent equivalent CSS viewport keeps primary action reachable",
+    "standalone offline load makes no external requests"
+  ],
+  "layouts": [
+    {
+      "width": 1440,
+      "height": 1000,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 320,
+      "height": 900,
+      "horizontalOverflow": false
+    }
+  ],
+  "errors": [],
+  "externalRequests": 0,
+  "passed": true
+}

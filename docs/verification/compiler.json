@@ -1,0 +1,18 @@
+{
+  "kind": "compiler only, not LLM game generation",
+  "combinations": 113400,
+  "deterministic": true,
+  "characters": {
+    "min": 14277,
+    "max": 14634
+  },
+  "edgeChecks": [
+    "invalid enums and dangerous object keys rejected",
+    "action compatibility catches mismatched controls",
+    "both material scopes and all optional settings preserved",
+    "free text is not evaluated or recursively interpolated",
+    "text and material limits are explicit",
+    "Windows and LF template endings produce identical preview and export text"
+  ],
+  "passed": true
+}

@@ -1,0 +1,5 @@
+# Local verification output
+docs/verification/*.png
+
+# Reference game archive used during development
+sample/

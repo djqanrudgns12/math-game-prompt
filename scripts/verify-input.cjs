@@ -1,0 +1,25 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const InputKernel=require('../prototypes/input-kernel.js');
+const root=path.resolve(__dirname,'..'), results=[];
+function check(name,fn){fn();results.push(name);}
+let clock=0;const k=new InputKernel(()=>clock);
+check('six simultaneous owners including non-primary contacts',()=>{k.start(6,60);for(let i=0;i<6;i++)assert(k.down(100+i,i,'source'));assert.equal(k.pointers.size,6);for(let i=5;i>=0;i--){const a=k.up(100+i,i,'target');assert(k.commit(a,true));assert(!k.commit(a,true));}assert.deepEqual(k.players.map(p=>p.score),[1,1,1,1,1,1]);});
+check('extra finger in same lane does not lock other lanes',()=>{k.start(6,60);assert(k.down(1,0,'s'));assert(!k.down(2,0,'s'));assert(k.down(3,1,'s'));assert.equal(k.pointers.size,2);});
+check('cross-lane release cannot transfer ownership',()=>{assert.equal(k.up(1,1,'t'),null);assert.equal(k.players[1].score,0);});
+check('cancelled contact cannot submit',()=>{k.cancel(3);assert.equal(k.up(3,1,'t'),null);});
+check('old held contact cannot answer new question',()=>{k.start(6,60);k.down(1,0,'s');k.next(0);assert.equal(k.up(1,0,'t'),null);});
+check('old action cannot answer new question',()=>{k.down(2,0,'s');const a=k.up(2,0,'t');k.next(0);assert(!k.commit(a,true));});
+check('old callbacks cannot advance a restarted round',()=>{const r=k.round,v=k.players[0].revision;k.start(2,60);assert(!k.next(0,r,v));});
+check('old action cannot score after restart',()=>{k.down(1,0,'s');const a=k.up(1,0,'t');k.start(2,60);assert(!k.commit(a,true));});
+check('deadline rejects release and finalizes once',()=>{clock=0;k.start(6,1);k.down(1,0,'s');clock=1000;const before=k.finished;assert.equal(k.up(1,0,'t'),null);for(let i=0;i<10;i++)k.tick();assert.equal(k.finished,before+1);});
+check('pause freezes clock and clears contacts',()=>{clock=0;k.start(6,60);clock=10000;k.down(1,0,'s');k.pause();clock=100000;assert.equal(k.pointers.size,0);assert(!k.down(2,0,'s'));k.resume();assert.equal(k.deadline,150000);assert.equal(k.up(1,0,'t'),null);});
+check('pause at deadline cannot resurrect game',()=>{clock=150000;k.pause();k.resume();assert.equal(k.phase,'result');});
+check('unlimited timer survives pause',()=>{k.start(1,null);k.pause();clock+=100000;k.resume();assert.equal(k.deadline,Infinity);assert(k.tick());});
+check('wrong response locks attempt without score',()=>{k.down(1,0,'s');const a=k.up(1,0,'t');assert(k.commit(a,false));assert.equal(k.players[0].score,0);assert(!k.commit(a,true));});
+check('invalid participant and pointer reuse are rejected',()=>{k.start(6,60);assert(!k.down(1,6,'s'));assert(!k.down(1,0.5,'s'));assert(k.down(1,0,'s'));assert(!k.down(1,1,'s'));});
+check('invalid settings rejected',()=>{for(const [n,s] of [[0,60],[7,60],[1,-1],[1,NaN]])assert.throws(()=>k.start(n,s));});
+let seed=81421;const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/2**32;};
+check('10000 randomized six-lane interleavings preserve at-most-once score',()=>{for(let round=0;round<10000;round++){k.start(6,60);const order=[0,1,2,3,4,5].sort(()=>random()-.5);for(const i of order)k.down(i+1,i,'s');for(const i of order){const cancelled=random()<.2;if(cancelled)k.cancel(i+1);const cross=random()<.2;const a=k.up(i+1,cross?(i+1)%6:i,'t');const correct=random()<.8;const expected=!!a&&correct;const before=k.players[i].score;k.commit(a,correct);k.commit(a,correct);assert.equal(k.players[i].score,before+(expected?1:0));}assert.equal(k.pointers.size,0);}});
+fs.mkdirSync(path.join(root,'docs/verification'),{recursive:true});fs.writeFileSync(path.join(root,'docs/verification/input-unit.json'),JSON.stringify({kind:'pure logic, not hardware',checks:results,fuzzRounds:10000,passed:true},null,2));
+const html=fs.readFileSync(path.join(root,'prototypes/input-lab.template.html'),'utf8').replace('/*KERNEL*/',fs.readFileSync(path.join(root,'prototypes/input-kernel.js'),'utf8'));
+fs.writeFileSync(path.join(root,'prototypes/input-lab.html'),html);console.log(JSON.stringify({checks:results.length,fuzzRounds:10000,passed:true}));

@@ -1,0 +1,23 @@
+{
+  "kind": "pure logic, not hardware",
+  "checks": [
+    "six simultaneous owners including non-primary contacts",
+    "extra finger in same lane does not lock other lanes",
+    "cross-lane release cannot transfer ownership",
+    "cancelled contact cannot submit",
+    "old held contact cannot answer new question",
+    "old action cannot answer new question",
+    "old callbacks cannot advance a restarted round",
+    "old action cannot score after restart",
+    "deadline rejects release and finalizes once",
+    "pause freezes clock and clears contacts",
+    "pause at deadline cannot resurrect game",
+    "unlimited timer survives pause",
+    "wrong response locks attempt without score",
+    "invalid participant and pointer reuse are rejected",
+    "invalid settings rejected",
+    "10000 randomized six-lane interleavings preserve at-most-once score"
+  ],
+  "fuzzRounds": 10000,
+  "passed": true
+}

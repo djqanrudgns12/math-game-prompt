@@ -1,0 +1,266 @@
+[
+  {
+    "name": "body",
+    "ratio": 14.34,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "secondary",
+    "ratio": 5.04,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "primary button",
+    "ratio": 7.58,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "game selected label",
+    "ratio": 6.79,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "lesson selected label",
+    "ratio": 6.64,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "theme selected label",
+    "ratio": 5.07,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "control border",
+    "ratio": 3.42,
+    "minimum": 3,
+    "passed": true
+  },
+  {
+    "name": "focus",
+    "ratio": 5.19,
+    "minimum": 3,
+    "passed": true
+  },
+  {
+    "name": "classroom title",
+    "ratio": 14.42,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "classroom card",
+    "ratio": 16.02,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "classroom secondary",
+    "ratio": 6.16,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "space title",
+    "ratio": 17.41,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "space card",
+    "ratio": 14.04,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "space secondary",
+    "ratio": 9.21,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "forest title",
+    "ratio": 11.16,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "forest card",
+    "ratio": 12.59,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "forest secondary",
+    "ratio": 5.85,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "ocean title",
+    "ratio": 10.82,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "ocean card",
+    "ratio": 11.93,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "ocean secondary",
+    "ratio": 5.82,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "pixel title",
+    "ratio": 16.41,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "pixel card",
+    "ratio": 12.82,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "pixel secondary",
+    "ratio": 8.61,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "sports title",
+    "ratio": 11.87,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "sports card",
+    "ratio": 8.46,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "sports secondary",
+    "ratio": 6.49,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "paper title",
+    "ratio": 12.21,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "paper card",
+    "ratio": 13.26,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "paper secondary",
+    "ratio": 6.05,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "block title",
+    "ratio": 11.53,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "block card",
+    "ratio": 13.18,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "block secondary",
+    "ratio": 5.67,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "dessert title",
+    "ratio": 11.23,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "dessert card",
+    "ratio": 12.0,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "dessert secondary",
+    "ratio": 6.12,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "dinosaur title",
+    "ratio": 10.18,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "dinosaur card",
+    "ratio": 12.12,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "dinosaur secondary",
+    "ratio": 5.47,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "robot title",
+    "ratio": 10.96,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "robot card",
+    "ratio": 11.87,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "robot secondary",
+    "ratio": 5.38,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "fantasy title",
+    "ratio": 15.05,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "fantasy card",
+    "ratio": 11.57,
+    "minimum": 4.5,
+    "passed": true
+  },
+  {
+    "name": "fantasy secondary",
+    "ratio": 8.52,
+    "minimum": 4.5,
+    "passed": true
+  }
+]

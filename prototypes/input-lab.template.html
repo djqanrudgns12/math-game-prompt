@@ -1,0 +1,34 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>6인 하단 입력 검증실</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f3ed;color:#183b36;font:18px/1.5 'Malgun Gothic',sans-serif;overflow:hidden}header{padding:20px 28px}h1{margin:0 0 8px;font-size:28px}p{margin:8px 0}button,select{font:inherit;min-height:44px;border:1px solid #8a9c97;border-radius:8px;background:white;color:#183b36;padding:6px 14px}button:focus-visible,select:focus-visible{outline:3px solid #ba4e20;outline-offset:3px}#view{display:flex;gap:16px;padding:24px 28px;flex-wrap:wrap}#view span{background:white;padding:12px;border-radius:8px}.band{position:fixed;left:0;right:0;bottom:0;display:grid;gap:8px;padding:8px;align-items:end;background:#e1e8df;border-top:2px solid #537466}.lane{min-width:0;display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:end;touch-action:none;user-select:none;border-top:4px solid var(--color);padding-top:4px}.lane button{min-width:64px;height:64px;min-height:64px;padding:0;font-size:24px;font-weight:700;touch-action:none}.lane button.selected{outline:3px solid #ba4e20;outline-offset:-4px}.lane button.done{background:#183b36;color:white}#status{font-weight:700}small{font-size:15px}
+</style>
+<header><h1>6인 하단 입력 검증실</h1><p>각자 <b>2 + 3</b> 카드를 <b>5</b>에 잇습니다. 끌거나 두 번 눌러 보세요.</p>
+<label>인원 <select id="players"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option selected>6</option></select></label>
+<label>조작 경계 <select id="height"><option>60</option><option selected>65</option><option>80</option></select>%</label>
+<button id="start">새 판</button> <button id="pause">일시정지</button> <button id="resume">이어하기</button> <button id="next">다음 과제</button>
+<p id="status" role="status"></p><small>수학 게임의 완성본이 아닌 공통 입력·배치 검증용입니다. 실제 보드의 6인 접점 지원을 인증하지 않습니다.</small></header>
+<section id="view" aria-label="학생별 처리 결과"></section><section class="band" id="band" aria-label="학생 하단 조작 영역"></section>
+<script>/*KERNEL*/</script>
+<script>
+const engine = new InputKernel(); const selections = []; const log = [];
+const band = document.getElementById('band'); const colors=['#205c50','#245c88','#92592a','#694c86','#86576c','#4c641f'];
+function snapshot(){return {round:engine.round,phase:engine.phase,pointers:engine.pointers.size,players:engine.players.map(p=>({...p})),finished:engine.finished,log:[...log]};}
+function status(){document.getElementById('status').textContent=`상태: ${engine.phase} · 현재 접점 ${engine.pointers.size}개`; document.querySelectorAll('#view span').forEach((el,i)=>el.textContent=`${i+1}번 · 완료 ${engine.players[i].score} · 과제 ${engine.players[i].revision+1}`);}
+function hit(x,y){const el=document.elementFromPoint(x,y)?.closest('[data-action]');return el&&band.contains(el)?el:null;}
+function cleanCaptures(){band.querySelectorAll('button').forEach(el=>{for(const id of [...engine.pointers.keys()]){try{if(el.hasPointerCapture(id))el.releasePointerCapture(id);}catch{}}});}
+function cancelSelections(){selections.fill(null);band.querySelectorAll('.selected').forEach(el=>el.classList.remove('selected'));}
+function runAction(a){if(!a)return;const lane=band.children[a.owner];if(a.from==='source'&&a.to==='source'){selections[a.owner]={round:a.round,revision:a.revision};lane.querySelector('[data-action="source"]').classList.add('selected');return;}
+ const selected=selections[a.owner]; const linked=a.from==='source'||selected&&selected.round===a.round&&selected.revision===a.revision;
+ if(linked&&a.to==='target'&&engine.commit(a,true)){selections[a.owner]=null;lane.querySelectorAll('button').forEach(el=>{el.classList.remove('selected');el.classList.add('done');});}status();}
+band.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;const el=hit(e.clientX,e.clientY);if(!el)return;const owner=+el.dataset.owner;if(engine.down(e.pointerId,owner,el.dataset.action)){e.preventDefault();try{el.setPointerCapture(e.pointerId);}catch{}log.push(['down',e.pointerId,owner,e.isPrimary,e.isTrusted]);}status();});
+band.addEventListener('pointerup',e=>{const el=hit(e.clientX,e.clientY);const a=engine.up(e.pointerId,el?+el.dataset.owner:-1,el?.dataset.action);try{if(e.target.hasPointerCapture(e.pointerId))e.target.releasePointerCapture(e.pointerId);}catch{}runAction(a);status();});
+for(const type of ['pointercancel','lostpointercapture'])band.addEventListener(type,e=>{engine.cancel(e.pointerId);status();});
+band.addEventListener('keydown',e=>{if(e.repeat||!['Enter',' '].includes(e.key)||!e.target.matches('[data-action]'))return;e.preventDefault();const el=e.target,i=+el.dataset.owner;const id=-i-1;if(engine.down(id,i,el.dataset.action))runAction(engine.up(id,i,el.dataset.action));});
+function start(count=+document.getElementById('players').value,pct=+document.getElementById('height').value,seconds=60){cleanCaptures();engine.start(count,seconds);selections.length=count;selections.fill(null);log.length=0;band.style.top=`${pct}%`;band.style.gridTemplateColumns=`repeat(${count},minmax(0,1fr))`;band.replaceChildren();document.getElementById('view').replaceChildren();for(let i=0;i<count;i++){const lane=document.createElement('div');lane.className='lane';lane.style.setProperty('--color',colors[i]);lane.dataset.owner=i;for(const [action,text] of [['source','2 + 3'],['target','5']]){const b=document.createElement('button');b.textContent=text;b.dataset.owner=i;b.dataset.action=action;b.setAttribute('aria-label',`${i+1}번 ${text}`);lane.append(b);}band.append(lane);document.getElementById('view').append(document.createElement('span'));}status();}
+function pause(){cleanCaptures();engine.pause();cancelSelections();status();}function next(){engine.players.forEach((p,i)=>engine.next(i));cancelSelections();band.querySelectorAll('.done').forEach(el=>el.classList.remove('done'));status();}
+document.getElementById('start').onclick=()=>start();document.getElementById('pause').onclick=pause;document.getElementById('resume').onclick=()=>{engine.resume();status();};document.getElementById('next').onclick=next;
+document.getElementById('height').onchange=()=>{pause();band.style.top=document.getElementById('height').value+'%';};
+document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});window.addEventListener('blur',pause);window.addEventListener('resize',pause);
+window.lab={engine,start,pause,next,snapshot};start();setInterval(()=>{engine.tick();status();},100);
+</script></html>

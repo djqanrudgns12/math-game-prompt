@@ -1,0 +1,96 @@
+{
+  "scope": "Exact rational research checks only. No PDF answer key, ChatGPT run, HTML game, or physical touchscreen was tested.",
+  "examples": [
+    {
+      "case": "daily_1_product",
+      "answer": "1/6",
+      "status": "passed"
+    },
+    {
+      "case": "basic_11_strict_bus_capacity",
+      "answer": "4",
+      "status": "passed"
+    },
+    {
+      "case": "basic_14_rounding",
+      "answer": "11/2",
+      "status": "passed"
+    },
+    {
+      "case": "basic_17_minimum_notes",
+      "answer": "12",
+      "status": "passed"
+    },
+    {
+      "case": "level_10_flower_inverse",
+      "answer": "180",
+      "status": "passed"
+    },
+    {
+      "case": "level_17_recover_wrong_operation",
+      "answer": "7/80",
+      "status": "passed"
+    },
+    {
+      "case": "level_19_count_positive_integers",
+      "answer": "11",
+      "status": "passed"
+    },
+    {
+      "case": "deep_9_maximum_strict_integer",
+      "answer": "88",
+      "status": "passed"
+    },
+    {
+      "case": "deep_10_second_ground_contact_distance",
+      "answer": "468",
+      "status": "passed"
+    },
+    {
+      "case": "deep_12_production_time",
+      "answer": "48",
+      "status": "passed"
+    },
+    {
+      "case": "deep_13_extreme_mixed_products",
+      "answer": "775/28",
+      "status": "passed"
+    },
+    {
+      "case": "deep_14_remaining_of_remaining",
+      "answer": "12/5",
+      "status": "passed"
+    },
+    {
+      "case": "deep_15_area",
+      "answer": "224/5",
+      "status": "passed"
+    },
+    {
+      "case": "deep_16_recover_whole",
+      "answer": "280",
+      "status": "passed"
+    },
+    {
+      "case": "deep_18_strip_area",
+      "answer": "6250",
+      "status": "passed"
+    },
+    {
+      "case": "ice_18_smallest_strict_integer",
+      "answer": "8",
+      "status": "passed"
+    },
+    {
+      "case": "ice_21_recover_wrong_operation",
+      "answer": "14/3",
+      "status": "passed"
+    }
+  ],
+  "invariant_cases": {
+    "strict_integer_bounds": 1440,
+    "rounding_boundaries": 1503,
+    "fraction_products_and_nested_wholes": 5000
+  },
+  "status": "passed"
+}

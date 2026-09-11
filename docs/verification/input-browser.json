@@ -1,0 +1,23 @@
+{
+  "engine": "Chromium via Playwright/CDP",
+  "physicalHardware": false,
+  "layoutCases": 54,
+  "checks": [
+    "54 player/viewport/reach layouts have no upper or undersized student targets",
+    "six simultaneous trusted CDP touch drags including non-primary pointers score independently",
+    "cross-lane releases cannot score for another owner",
+    "touchCancel clears six captures",
+    "pause while six fingers held prevents stale release",
+    "restart while held rejects previous-round input",
+    "next question while held rejects previous-question input",
+    "six simultaneous tap-then-tap connections work",
+    "seventh contact in occupied lane cannot block six owners",
+    "viewport resize pauses active input",
+    "keyboard alternative has no duplicate click score",
+    "native mouse pointer plus compatibility click scores only once",
+    "synthetic DOM test: one player completing leaves five other held contacts intact",
+    "local standalone file reloads offline"
+  ],
+  "errors": [],
+  "passed": true
+}
