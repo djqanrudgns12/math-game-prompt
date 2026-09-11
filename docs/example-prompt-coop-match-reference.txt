@@ -4,7 +4,7 @@ These development instructions are in English. ALL user-facing content must be n
 Deliver a full playable loop with error recovery, not just the first screen. Do not claim perfection or claim tests ran when they did not.
 
 [TEACHER SETTINGS]
-Game: Relationship matching (match); Korean display name: "선 잇기"
+Game: Relationship matching (match); Korean display name: "짝 맞추기"
 Theme: Jungle adventure (forest); Korean display name: "정글 어드벤처"
 Initial participants: 4 simultaneous players
 Initial duration: 90 seconds

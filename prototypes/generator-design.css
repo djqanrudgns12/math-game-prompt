@@ -243,17 +243,21 @@ a { color: var(--brand); }
 .class-card .step-title, .theme-card .step-title { background: #fff; }
 .num { width: 34px; height: 34px; border-radius: 12px; }
 .step > p { margin-top: 12px; }
-.game-list { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; }
-.game { flex-direction: column; align-items: flex-start; gap: 12px; min-height: 112px; padding: 14px 12px; border-radius: 16px; background: #fafcfb; }
-.game .dot { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 11px; background: #eaf0ef; color: #315f56; font-size: 21px; font-weight: 700; line-height: 1; }
-.game[data-game=sequence] .dot { font-size: 13px; }
-.game > span:last-child { display: grid; gap: 3px; }
-.game small { display: block; font-size: 11px; line-height: 1.4; color: #5d6b70; }
-.game strong { font-size: 15px; font-weight: 700; }
-.game:hover { border-color: #75b3a5; box-shadow: 0 4px 12px #173e3210; }
-.game[aria-pressed=true] { background: #ecf8f3; border-color: #087b69; }
-.game[aria-pressed=true] .dot { background: #087b69; color: white; }
-.game[aria-pressed=true]::after { top: 12px; right: 12px; }
+.game-list { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; }
+.game { position:relative; isolation:isolate; flex-direction:column; align-items:flex-start; gap:14px; min-height:128px; padding:16px; overflow:hidden; border-color:#dce3e8; border-radius:17px; background:#fff; box-shadow:0 4px 14px rgba(24,49,70,.045); text-align:left; }
+.game::before { content:""; position:absolute; z-index:-1; top:-36px; right:-30px; width:92px; height:92px; border-radius:50%; background:var(--game-soft); opacity:.72; transition:transform .2s ease; }
+.game .dot { display:grid; place-items:center; width:44px; height:44px; border-radius:13px; color:var(--game-accent); background:var(--game-soft); box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--game-accent) 12%,transparent); line-height:1; transition:color .18s ease,background .18s ease,transform .18s ease; }
+.game .dot svg { width:23px; height:23px; stroke-width:2.15; }
+.game > span:last-child { display:grid; gap:4px; min-width:0; }
+.game small { display:block; color:#667481; font-size:12px; font-weight:650; line-height:1.4; }
+.game strong { color:#172633; font-size:16px; font-weight:800; line-height:1.35; letter-spacing:-.2px; }
+.game:hover { border-color:color-mix(in srgb,var(--game-accent) 58%,#dce3e8); box-shadow:0 9px 24px rgba(24,49,70,.09); transform:translateY(-2px); }
+.game:hover::before { transform:scale(1.12); }
+.game:hover .dot { transform:scale(1.06); }
+.game[aria-pressed=true] { background:linear-gradient(150deg,#fff,var(--game-soft)); border-color:var(--game-accent); box-shadow:0 0 0 1px var(--game-accent),0 9px 22px color-mix(in srgb,var(--game-accent) 15%,transparent); }
+.game[aria-pressed=true] .dot { background:var(--game-accent); color:#fff; box-shadow:0 7px 15px color-mix(in srgb,var(--game-accent) 28%,transparent); }
+.game[aria-pressed=true]::after { display:grid; place-items:center; top:12px; right:12px; width:22px; height:22px; border-radius:50%; color:#fff; background:var(--game-accent); box-shadow:0 4px 10px color-mix(in srgb,var(--game-accent) 25%,transparent); font-size:12px; }
+.game[aria-pressed=true] strong { color:#172633; font-weight:850; }
 .expand-games { margin: 10px 0 2px; border: 1px dashed #b8cdc6; border-radius: 12px; }
 .game-detail { background: #f4f8f6; border: 0; border-radius: 14px; padding: 18px; }
 .controls { gap: 20px 16px; }
@@ -268,7 +272,9 @@ a { color: var(--brand); }
 @media(max-width:1100px) and (min-width:761px) { .game-list { grid-template-columns:repeat(3,minmax(0,1fr)); } }
 @media(max-width:600px) {
  .game-list { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
- .game { min-height:100px; padding:12px; gap:8px; }
+ .game { min-height:112px; padding:13px; gap:10px; }
+ .game .dot { width:40px; height:40px; }
+ .game .dot svg { width:21px; height:21px; }
  .class-card > .controls { padding:12px; }
  .segments { gap:2px; padding:3px; }
  #players button { padding:8px 2px; font-size:14px; }

@@ -18,10 +18,11 @@ GitHub Pages 주소로 접속해 게임 유형, 수업 조건, 게임 분위기�
 
 ## 수정 후 빌드
 
-원본 파일을 수정한 다음 아래 명령으로 배포 파일을 다시 만듭니다.
+처음 한 번 아이콘 패키지를 설치한 뒤, 원본 파일을 수정하고 배포 파일을 다시 만듭니다.
 
 ```text
-node scripts/build-prototypes.cjs
+npm install
+npm run build
 ```
 
 배포 파일인 루트 `index.html`과 미리보기 파일이 함께 갱신됩니다.

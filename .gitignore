@@ -3,3 +3,6 @@ docs/verification/*.png
 
 # Reference game archive used during development
 sample/
+
+# Build-time packages
+node_modules/

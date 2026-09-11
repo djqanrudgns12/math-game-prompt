@@ -1,0 +1,11 @@
+{
+  "name": "math-game-prompt-workshop",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-prototypes.cjs"
+  },
+  "devDependencies": {
+    "lucide-static": "1.44.0"
+  }
+}

@@ -17,7 +17,9 @@ const data={games,themes};const template=read('prototypes/prompt-en.txt').replac
 fs.writeFileSync(path.join(root,'prototypes/catalog.json'),JSON.stringify(data,null,2));
 fs.writeFileSync(path.join(root,'prototypes/prompt-base.txt'),template);
 const safe=o=>JSON.stringify(o).replace(/</g,'\\u003c');
-const bundle=read('prototypes/art-direction.js')+'\n'+read('prototypes/theme-art.js')+'\n'+read('prototypes/compiler.js')+`\nconst compiler=makeCompiler(${safe(data)},${safe(template)});`;
+const gameIconNames={quiz:'circle-check-big',race:'flag-triangle-right',tug:'move-horizontal',boss:'crown',defense:'castle',target:'crosshair',bingo:'grid-3x3',match:'link-2',memory:'copy',sort:'list-filter',path:'route',sequence:'list-ordered',build:'puzzle',merge:'combine',territory:'map',balance:'scale',estimate:'gauge',rhythm:'repeat-2',resource:'shopping-basket',code:'search-check'};
+const gameIcons=Object.fromEntries(Object.entries(gameIconNames).map(([id,name])=>[id,read('node_modules/lucide-static/icons/'+name+'.svg').replace(/<!--[\s\S]*?-->/g,'').replace(/\s+/g,' ').trim()]));
+const bundle=read('prototypes/art-direction.js')+'\n'+read('prototypes/theme-art.js')+'\n'+read('prototypes/compiler.js')+`\nconst compiler=makeCompiler(${safe(data)},${safe(template)});\nconst gameIcons=${safe(gameIcons)};`;
 const html=read('prototypes/generator-design.template.html').replace(/<style>[\s\S]*?<\/style>/,()=>'<style>'+read('prototypes/generator-design.css')+'</style>').replace('/*COMPILER*/',()=>bundle);
 fs.writeFileSync(path.join(root,'prototypes/generator-design.html'),html);
 fs.writeFileSync(path.join(root,'index.html'),html);
