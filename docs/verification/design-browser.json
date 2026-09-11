@@ -1,6 +1,7 @@
 {
   "kind": "prototype browser UI, not teacher usability study",
   "checks": [
+    "wizard starts on guidance and previous/next show exactly one card",
     "product name and requested three-line introduction are exact",
     "copyright appears once after main content in normal page flow",
     "8 initial genres expand to 20 and collapse without losing controls",

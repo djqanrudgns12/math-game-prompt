@@ -276,12 +276,20 @@ a { color: var(--brand); }
  #levels small { font-size:10px; }
 }
 
-/* Five independent cards, in reading order at every screen size. */
+/* Five steps with shared, persistent form state. */
 .card-nav { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 24px; }
 .card-nav a { padding:10px 14px; border:1px solid #cadbd6; border-radius:999px; background:#fff; font-size:14px; font-weight:700; text-decoration:none; }
 .card-nav a:hover { background:var(--brand-soft); }
+.card-nav a[aria-current="step"] { background:var(--brand-deep); color:#fff; border-color:var(--brand-deep); }
 .card-nav a:focus-visible { outline:3px solid var(--brand); outline-offset:3px; }
-.workbench { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; }
+.workbench { display:block; }
+.workbench > .step[hidden], #step-next[hidden] { display:none; }
+.wizard-footer { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:20px; padding:16px 0; }
+.wizard-footer .primary { width:auto; }
+.wizard-footer p { color:var(--muted); font-size:14px; text-align:center; }
+.wizard-footer button { flex:none; }
+.wizard-footer button:disabled { opacity:.45; cursor:default; }
+.card-nav { scroll-margin-top:20px; }
 .workbench > .step { min-width:0; margin:0; scroll-margin-top:24px; }
 .guide-card, .theme-card, .result-card { grid-column:1 / -1; }
 .guide-card .num { background:#52647e; }
@@ -310,6 +318,9 @@ a { color: var(--brand); }
  .theme-card .selected-design { grid-template-columns:minmax(0,1fr); }
 }
 @media(max-width:600px) {
+ .wizard-footer { flex-wrap:wrap; gap:10px; }
+ .wizard-footer p { order:-1; flex-basis:100%; margin:0; }
+ .wizard-footer button { font-size:14px; }
  .workbench { gap:20px; }
  .card-nav { gap:6px; }
  .card-nav a { padding:9px 10px; font-size:12px; }
@@ -325,7 +336,7 @@ a { color: var(--brand); }
 <header><div class="brand"><span class="mark" aria-hidden="true">M</span><span>수학 공작소</span></div><button class="quiet" id="help-open">사용 방법</button></header>
 <main><section class="intro"><div class="intro-copy"><span class="intro-label">활동지 1개로, 선생님이 원하는 게임을 디자인하세요.</span><h1>수학 게임 공작소</h1><p>선생님의 취향에 맞게 프롬프트를 만들어줄거에요.</p></div><div class="hero-points" aria-label="주요 기능"><span><b>20</b> 게임 유형</span><span><b>12</b> 게임 분위기</span><span><b>1–6</b> 동시 참여</span></div></section>
 
-<nav class="card-nav" aria-label="카드 바로가기"><a href="#guide-card">01 사용 안내</a><a href="#game-card">02 게임 유형</a><a href="#class-card">03 수업 조건</a><a href="#theme-card">04 게임 분위기</a><a href="#result-card">05 프롬프트</a></nav>
+<nav class="card-nav" aria-label="제작 단계"><a href="#guide-card">01 사용 안내</a><a href="#game-card">02 게임 유형</a><a href="#class-card">03 수업 조건</a><a href="#theme-card">04 게임 분위기</a><a href="#result-card">05 프롬프트</a></nav>
 <div class="workbench">
 <section class="step guide-card" id="guide-card" aria-labelledby="guide-heading" tabindex="-1"><div class="step-title"><span class="num">01</span><h2 id="guide-heading">사용법 및 유의사항</h2></div><p class="small">아래 카드를 순서대로 선택한 뒤, 마지막 카드에서 프롬프트를 복사하세요. 선택 내용은 바로 반영됩니다.</p><aside class="file-guide" aria-label="활동지 파일 안내"><span class="file-guide-badge" aria-hidden="true">PDF</span><p><strong>활동지는 PDF가 가장 안정적이에요.</strong><span>HWP·HWPX는 PDF로 바꿔서 올려주세요. PNG나 JPG도 되지만, 가급적 PDF로 올려야 합니다.</span></p></aside><div class="guide-content"><ol class="help-steps"><li>게임과 수업 조건을 고르고 프롬프트를 복사하세요.</li><li>ChatGPT 새 대화에서 프롬프트를 붙여 넣고 활동지 사진·PDF 1~2개를 첨부하세요.</li><li>완성된 HTML 파일을 받으세요. 코드로 받았다면 전체를 메모장에 붙이고 UTF-8, 모든 파일 형식으로 <b>game.html</b>을 저장하세요.</li><li>파일을 브라우저로 열고 교사 메뉴의 문제·진행 점검, 정답·오답 후 다음 문제, 터치를 확인하세요. 화면을 확장했다면 창을 칠판 쪽으로 옮겨 주세요.</li></ol><p>프롬프트는 영어로 작성되며 게임의 문제·버튼·설명은 한국어로 제작하도록 요청합니다. 입력 순서, 다음 문제, 재시작 등 진행 검증 지시를 포함합니다.</p><p>학년·차시가 없어도 문제 내용에서 학습 목표를 파악하도록 요청합니다.</p></div></section>
 <section class="step game-card" id="game-card" aria-labelledby="game-heading"><div class="step-title"><span class="num">02</span><h2 id="game-heading">게임 유형 선택</h2></div><p class="small">장르를 선택하면 학생의 조작 방법과 게임 진행 방식을 확인할 수 있습니다.</p><div class="game-list" id="featured"></div><button class="expand-games" id="games-toggle" aria-expanded="false" aria-controls="featured">게임 유형 더 보기 · 전체 20개</button><div class="game-detail" aria-live="polite"><strong id="detail-name"></strong><p><span>학생 조작</span><span id="detail-action" style="font-weight:400"></span></p><p><span>게임 진행</span><span id="detail-progress" style="font-weight:400"></span></p></div><div class="all-games"><button id="catalog-open">설명으로 게임 찾기</button><button id="novel">새 게임 구상</button></div></section>
@@ -479,4 +490,40 @@ function showPrompt(open=true){$('prompt-text').value=output.text;$('prompt-coun
 async function copy(){try{await navigator.clipboard.writeText(output.text);$('status').textContent='프롬프트를 복사했습니다. 활동지를 PDF나 사진(PNG)로 ChatGPT에 함께 첨부하세요.';}catch{$('status').textContent='자동 복사가 지원되지 않습니다. 전체 선택 후 복사하거나 TXT로 저장하세요.';showPrompt();$('prompt-text').focus();$('prompt-text').select();}}
 $('copy').onclick=copy;$('dialog-copy').onclick=copy;$('prompt-open').onclick=()=>showPrompt();$('select-prompt').onclick=()=>{$('prompt-text').focus();$('prompt-text').select();};$('help-open').onclick=()=>{$('guide-card').scrollIntoView({block:'start'});$('guide-card').focus({preventScroll:true});};$('theme-open').onclick=()=>{$('theme-large-name').textContent=output.theme.name;$('theme-large').innerHTML=ThemeArt.render(state.themeId,state.players,output.game.name);$('theme-large-description').textContent=output.theme.direction;$('theme-dialog').showModal();};document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>b.closest('dialog').close());
 $('download').onclick=()=>{const blob=new Blob(['\uFEFF'+output.text],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='수학-공작소-프롬프트.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};window.generator={getState:()=>({...state}),getOutput:()=>output.text,compiler};render();
+</script><script>
+const wizardCards = [...document.querySelectorAll('.workbench > .step')];
+const wizardLinks = [...document.querySelectorAll('.card-nav a')];
+const wizardLabels = ['사용 안내', '게임 유형', '수업 조건', '게임 분위기', '프롬프트 확인'];
+let currentStep = 0;
+const wizardFooter = document.createElement('div');
+wizardFooter.className = 'wizard-footer';
+wizardFooter.innerHTML = '<button id="step-prev" type="button">← 이전</button><p id="step-status" role="status" aria-live="polite"></p><button id="step-next" type="button" class="primary">다음 →</button>';
+document.querySelector('.workbench').after(wizardFooter);
+$('guide-card').querySelector(':scope > p').textContent = '한 단계씩 선택하고 다음을 눌러 주세요. 마지막 단계에서 프롬프트를 복사할 수 있으며, 이전 단계로 돌아가도 선택 내용은 유지됩니다.';
+function showStep(index, focus = true, updateHistory = true) {
+  currentStep = Math.max(0, Math.min(wizardCards.length - 1, index));
+  wizardCards.forEach((card, i) => { card.hidden = i !== currentStep; card.tabIndex = -1; });
+  wizardLinks.forEach((link, i) => {
+    if (i === currentStep) link.setAttribute('aria-current', 'step');
+    else link.removeAttribute('aria-current');
+  });
+  $('step-prev').disabled = currentStep === 0;
+  $('step-next').hidden = currentStep === wizardCards.length - 1;
+  $('step-next').textContent = currentStep === 0 ? '시작하기 →' : (currentStep === 3 ? '프롬프트 확인 →' : '다음: ' + wizardLabels[currentStep + 1] + ' →');
+  $('step-status').textContent = (currentStep + 1) + ' / 5 단계 · ' + wizardLabels[currentStep];
+  const card = wizardCards[currentStep];
+  if (updateHistory && location.hash !== '#' + card.id) history.pushState(null, '', '#' + card.id);
+  if (focus) { card.focus({preventScroll:true}); document.querySelector('.card-nav').scrollIntoView({block:'start'}); }
+}
+wizardLinks.forEach((link, i) => link.addEventListener('click', event => { event.preventDefault(); showStep(i); }));
+$('step-prev').onclick = () => showStep(currentStep - 1);
+$('step-next').onclick = () => showStep(currentStep + 1);
+$('help-open').onclick = () => showStep(0);
+function restoreStep(focus = true) {
+  const index = wizardCards.findIndex(card => '#' + card.id === location.hash);
+  showStep(index < 0 ? 0 : index, focus, false);
+}
+window.addEventListener('popstate', () => restoreStep());
+window.addEventListener('hashchange', () => restoreStep());
+restoreStep(false);
 </script></body></html>

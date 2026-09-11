@@ -275,12 +275,20 @@ a { color: var(--brand); }
  #levels small { font-size:10px; }
 }
 
-/* Five independent cards, in reading order at every screen size. */
+/* Five steps with shared, persistent form state. */
 .card-nav { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 24px; }
 .card-nav a { padding:10px 14px; border:1px solid #cadbd6; border-radius:999px; background:#fff; font-size:14px; font-weight:700; text-decoration:none; }
 .card-nav a:hover { background:var(--brand-soft); }
+.card-nav a[aria-current="step"] { background:var(--brand-deep); color:#fff; border-color:var(--brand-deep); }
 .card-nav a:focus-visible { outline:3px solid var(--brand); outline-offset:3px; }
-.workbench { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; }
+.workbench { display:block; }
+.workbench > .step[hidden], #step-next[hidden] { display:none; }
+.wizard-footer { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:20px; padding:16px 0; }
+.wizard-footer .primary { width:auto; }
+.wizard-footer p { color:var(--muted); font-size:14px; text-align:center; }
+.wizard-footer button { flex:none; }
+.wizard-footer button:disabled { opacity:.45; cursor:default; }
+.card-nav { scroll-margin-top:20px; }
 .workbench > .step { min-width:0; margin:0; scroll-margin-top:24px; }
 .guide-card, .theme-card, .result-card { grid-column:1 / -1; }
 .guide-card .num { background:#52647e; }
@@ -309,6 +317,9 @@ a { color: var(--brand); }
  .theme-card .selected-design { grid-template-columns:minmax(0,1fr); }
 }
 @media(max-width:600px) {
+ .wizard-footer { flex-wrap:wrap; gap:10px; }
+ .wizard-footer p { order:-1; flex-basis:100%; margin:0; }
+ .wizard-footer button { font-size:14px; }
  .workbench { gap:20px; }
  .card-nav { gap:6px; }
  .card-nav a { padding:9px 10px; font-size:12px; }
