@@ -3,8 +3,8 @@
   "combinations": 113400,
   "deterministic": true,
   "characters": {
-    "min": 14277,
-    "max": 14634
+    "min": 38805,
+    "max": 39196
   },
   "edgeChecks": [
     "invalid enums and dangerous object keys rejected",

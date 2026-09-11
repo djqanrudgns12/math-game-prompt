@@ -1,4 +1,4 @@
-const fs=require('node:fs'),path=require('node:path');const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8').replace(/^\uFEFF/,'');
+const fs=require('node:fs'),path=require('node:path');const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8').replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n');
 const prd=read('docs/PRD-interview-draft.md'),arch=read('docs/generator-architecture.md'),contract=read('docs/prompt-contract-draft.md');
 const ids=['quiz','race','tug','boss','defense','target','bingo','match','memory','sort','path','sequence','build','merge','territory','balance','estimate','rhythm','resource','code'];
 const themeIds=['classroom','space','forest','ocean','pixel','sports','paper','block','dessert','dinosaur','robot','fantasy'];
@@ -10,7 +10,10 @@ const shared=['race','tug','boss','defense','territory'];const processing=['quiz
 const games={};for(const id of ids){const p=row(prd,id),a=row(arch,id);games[id]={id,name:p[1],summary:copy[id].join(" "),studentAction:copy[id][0],progressDescription:copy[id][1],core:a[1],end:a[2],mode:modes[id]||'versus',actions:actions[id]||['choice'],group:['match','memory','sequence','build','merge','balance'].includes(id)?'연결·구성':shared.includes(id)||['path','resource'].includes(id)?'전략·협동':'판단',flow:['quiz','bingo','estimate'].includes(id)?'공통 라운드, 각자 응답, 모두 응답하거나 라운드 한도 후 다음. 전체 마감 시각을 넘지 않음.':'개인 과제는 각자 진행, 공동 단계만 함께 반영. 동등한 문제 순서 또는 난도 분포를 사용.',adapter:shared.includes(id)?'개인 모드는 각자 또는 각 진영의 대상, 팀전은 팀 대상, 협동은 공동 경로/목표/상태로 구현하세요.':processing.includes(id)?'개인 판단과 항목 처리는 독립, 묶음 완성은 개인/팀/공동 수집·주문 목표에 반영하세요.':'개인 조작판은 분리하고 완성이 개인 기록/팀 진행/공동 작품의 일부로 반영되게 하세요.'};}
 games.novel={id:'novel',name:'자료에 맞는 새 게임',summary:'활동지를 읽은 ChatGPT가 수학 판단에 맞는 게임 한 가지를 구상합니다.',core:contract.match(/## 3\.[\s\S]*?```text\r?\n([\s\S]*?)\r?\n```/)[1],end:'수학적으로 유효한 행동과 종료·재시작을 정의하고 핵심 의도를 바꿔야 하는 충돌만 질문하세요.',mode:'coop',actions:['choice','connect','sort','order','construct'],group:'새 구상',flow:'수학 목표와 장르에 맞는 개인 진행을 설계하세요.',adapter:'개인·팀·공동 목표의 변환을 구현하세요.'};
 const art=require('../prototypes/theme-art.js'),direction=require('../prototypes/art-direction.js');const themes={};themeIds.forEach(id=>{const p=row(prd,id);themes[id]={id,name:p[1],direction:p[2],...art.styles[id],color:art.styles[id].accent};themes[id].visualContract=direction.contract(themes[id]);});
-const data={games,themes};const template=contract.match(/```text\r?\n([\s\S]*?)\r?\n```/)[1];
+const english=require('../prototypes/prompt-contracts.js');
+for(const g of Object.values(games)){const p=english.gameContract(g.id);g.promptName=p.name;g.promptFlow=p.flow;g.promptContract=p.text;}
+for(const t of Object.values(themes)){const p=english.themeContract(t,direction.worlds[t.id]);t.promptName=p.name;t.promptContract=p.text;}
+const data={games,themes};const template=read('prototypes/prompt-en.txt').replace(/\r\n?/g,'\n').trimEnd();
 fs.writeFileSync(path.join(root,'prototypes/catalog.json'),JSON.stringify(data,null,2));
 fs.writeFileSync(path.join(root,'prototypes/prompt-base.txt'),template);
 const safe=o=>JSON.stringify(o).replace(/</g,'\\u003c');

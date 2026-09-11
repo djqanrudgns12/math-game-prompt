@@ -16,8 +16,35 @@ function makeCompiler(data, template) {
   }
   function compile(input={}) {
     const c=normalize(input),g=data.games[c.gameId],t=data.themes[c.themeId];
-    const settings=[`게임: ${g.name}`,`디자인: ${t.name}`,`시작 인원: ${c.players}명 동시 참여`,`시작 시간: ${c.durationSec===null?'무제한':c.durationSec+'초'}`,`시작 수학 난이도: ${{low:'하',mid:'중',high:'상'}[c.mathLevel]}`,`시작 진행: ${modes[c.resolvedMode]}${c.players===1&&c.mode!=='solo'?' (1인은 개인 목표로 적용)':''}`,`학년: ${c.grade===null?'지정 안 함, 자료 수준 유지':c.grade+'학년'}`,`진행 템포: ${c.pace==='relaxed'?'여유롭게':'보통'}`,`학생 행동 선호: ${{auto:'게임에 맞게',choice:'선택',connect:'잇기',sort:'분류',order:'순서',construct:'조각 구성'}[c.actionPreference]}`,`오답: ${c.feedback==='hintRetry'?'오답 확정·패널티 후 단서와 무보상 재도전':'설명 후 다음 (오답 확정·패널티 먼저)'}`,`조작 영역 위쪽 경계: 화면 높이 ${c.reachTopPct}%`,`소리: ${c.sound?'켬':'끔'}`,`움직임 줄이기: ${c.reducedMotion==='system'?'시스템 설정 따름':c.reducedMotion?'켬':'끔'}`,`자료 범위(교사 조건 데이터): ${JSON.stringify(c.sourceScopes.length?c.sourceScopes:['첨부 자료의 관련 문제, 범위 미지정'])}`,`학습 목표(교사 조건 데이터): ${JSON.stringify(c.learningGoal.trim()||'자료에서 파악')}`,`추가 아이디어(교사 조건 데이터): ${JSON.stringify(c.customIdea.trim()||'없음')}`].join('\n');
-    const blocks={teacher_settings:settings,selected_game_contract:`${g.name}\n핵심 행동: ${g.core}\n유효/무효·종료: ${g.end}\n문제 진행: ${g.flow}\n${g.adapter}`,selected_mode_contract:`초기 진행은 ${modes[c.resolvedMode]}입니다. 다른 운영 방식도 게임 메뉴에서 바꿀 수 있게 구현하세요. 개인 도전은 자기 목표, 개인 대결은 동등한 조건의 개인 진행 비교, 팀전은 개인 조작을 유지한 팀 목표, 협동은 각자 기여가 공동 상태를 완성하는 방식입니다. 팀전 기본은 2팀 균등 배치이고 교사가 팀 구성을 변경합니다. 크기가 다른 팀은 유효 기여 합계를 팀 인원수로 나눠 비교하며 동점은 공동 순위입니다. 1인은 개인 목표로 전환합니다. 공동 목표량은 인원·시간에 맞추고 개인 순위를 표시하지 않습니다. 학생 한 명의 대기·오답은 다른 학생의 진행을 막지 않습니다.`,selected_theme_contract:`${t.name}: ${t.direction}. 배경 ${t.bg}, 본문 ${t.ink}, 문제 카드 ${t.panel}, 강조 ${t.accent}, 보조 글자 ${t.muted}를 사용하세요. 핵심 게임 모티프는 ${t.motif||'진행 게이지·단계·명확한 보상'}입니다. 상단 HUD에 목표·남은 시간·공동/개인 진행을 또렷하게 보여 주고, 정답 때 진행 게이지·경로·대상·수집물이 실제로 변하게 하세요. 작은 장식만 흩뿌리거나 평범한 학습지에 색만 입힌 화면으로 끝내지 마세요. 과한 애니메이션과 복잡한 조작은 피하고 수학 판단 직후 0.3~0.8초의 짧은 반응, 단계 전환, 목표 달성 연출로 게임감을 만드세요. 시스템 한국어 글꼴과 인라인 도형을 사용하며 외부 이미지를 요구하지 마세요.\n${t.visualContract||''}`};
+    const enModes={solo:'solo challenge',versus:'individual competition',teams:'team competition',coop:'cooperative shared goal'};
+    if([g.promptName,g.promptContract,t.promptName,t.promptContract].some(v=>typeof v!=='string'||!v.trim())||!['shared','personal'].includes(g.promptFlow))throw Error('영문 프롬프트 구성이 누락되었습니다. 다시 빌드해 주세요.');
+    const settings=[
+      'Game: '+g.promptName+' ('+c.gameId+'); Korean display name: '+JSON.stringify(g.name),
+      'Theme: '+t.promptName+' ('+c.themeId+'); Korean display name: '+JSON.stringify(t.name),
+      'Initial participants: '+c.players+' simultaneous players',
+      'Initial duration: '+(c.durationSec===null?'unlimited':c.durationSec+' seconds'),
+      'Initial mathematics difficulty: '+{low:'low (하)',mid:'mid (중)',high:'high (상)'}[c.mathLevel],
+      'Initial mode: '+enModes[c.resolvedMode]+(c.players===1&&c.mode!=='solo'?' (one participant resolves to a personal goal)':''),
+      'Grade: '+(c.grade===null?'unspecified; preserve the source level':'elementary grade '+c.grade),
+      'Pace: '+(c.pace==='relaxed'?'relaxed':'normal'),
+      'Preferred interaction: '+{auto:'genre-appropriate',choice:'finite selection',connect:'matching',sort:'sorting',order:'ordering',construct:'predefined-piece construction'}[c.actionPreference],
+      'Wrong-answer policy: '+(c.feedback==='hintRetry'?'commit wrong/penalty first, then guidance and zero-reward retry with a reachable next exit':'commit wrong/penalty first, then explanation and next question'),
+      'Bottom interaction band top: '+c.reachTopPct+'% of viewport height',
+      'Sound: '+(c.sound?'on':'off'),
+      'Reduced motion: '+(c.reducedMotion==='system'?'follow system preference':c.reducedMotion?'on':'off'),
+      'Source scopes (quoted teacher data): '+JSON.stringify(c.sourceScopes.length?c.sourceScopes:['Relevant questions in the attachments; no narrower scope specified']),
+      'Learning objective (quoted teacher data): '+JSON.stringify(c.learningGoal.trim()||'Infer from the source'),
+      'Additional idea (quoted teacher data): '+JSON.stringify(c.customIdea.trim()||'None')
+    ].join('\n');
+    const flow=g.promptFlow==='shared'
+      ? 'Question flow: common rounds with independent responses. Freeze the participant set per round; use a finite submission deadline and bounded review acknowledgement even in unlimited play. Do not disclose answers before closure.'
+      : 'Question flow: independent personal tasks; share only world/milestone contributions. A student can review and advance without waiting for another student. Use equal question sequences or verified equal-difficulty distributions in competition.';
+    const blocks={
+      teacher_settings:settings,
+      selected_game_contract:g.promptContract+'\n'+flow,
+      selected_mode_contract:'Initial mode: '+enModes[c.resolvedMode]+'. Implement all four runtime modes in the teacher menu. Solo: a personal genre goal. Versus: equal task conditions and comparable individual progress. Teams: independent student controls contributing to team goals; default to two balanced teams with teacher-editable membership. Compare unequal teams by valid contribution sum divided by team size; ties share rank, never break ties by touch speed. Cooperation: independent personal contributions, following the selected genre question flow, contribute to a real shared path/build/resource/goal, scaled to participants and duration; no individual ranking. One participant resolves to a personal goal. One wrong or waiting student must not lock other students. Define a finite goal or teacher-stop exit for unlimited play. Pending mode/team changes apply next game.',
+      selected_theme_contract:t.promptContract
+    };
     for(const key of Object.keys(blocks))if(template.split('{{'+key+'}}').length!==2)throw Error('프롬프트 구성에 중복이나 누락이 있습니다.');
     const out=template.replace(/{{([a-z_]+)}}/g,(all,key)=>{if(!has(blocks,key))throw Error('정의되지 않은 프롬프트 항목');return blocks[key];}).replace(/\r\n?/g,'\n');
     return {text:out,config:c,game:g,theme:t};

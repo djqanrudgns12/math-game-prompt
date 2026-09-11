@@ -10,9 +10,19 @@
 
 수정할 때는 같은 위치의 `index.html`을 교체하고 저장하면 다시 배포됩니다. 페이지가 아직 안 보이면 Actions에서 Pages 배포가 완료됐는지 확인합니다.
 
-현재 이 폴더에는 연결된 Git 저장소가 없고, 로컬 GitHub CLI의 로그인 토큰이 만료되어 자동 배포는 실행하지 않았습니다. 위 절차는 브라우저 로그인만으로 진행할 수 있습니다.
+현재 프로젝트는 `djqanrudgns12/math-game-prompt` 저장소의 `main` 브랜치에 연결되어 있습니다. 사이트 주소는 https://djqanrudgns12.github.io/math-game-prompt/ 입니다. 기존 사이트를 갱신할 때 새 저장소를 만들 필요가 없습니다.
 
 개발 파일을 수정한 뒤에는 `node scripts/build-prototypes.cjs`를 실행하면 루트 `index.html`과 `prototypes/generator-design.html`이 함께 갱신됩니다.
+
+업데이트 순서는 다음과 같습니다.
+
+1. `prototypes/prompt-en.txt`와 필요한 원본을 수정합니다.
+2. `node scripts/build-prototypes.cjs`로 빌드합니다.
+3. `node scripts/verify-prompt-contract.cjs`, `node scripts/verify-compiler.cjs`, `node scripts/verify-design.cjs`를 통과시킵니다.
+4. 원본과 생성된 `index.html`을 함께 커밋해 기존 `main`으로 푸시합니다.
+5. 해당 커밋의 `pages build and deployment` 실행이 성공했는지 확인하고, 실제 사이트의 HTML이 로컬 빌드와 일치하는지 확인합니다. 푸시 완료만으로 게시 완료라고 판단하지 않습니다.
+
+프롬프트 2.0부터 영어 제작 지시문과 한국어 게임 출력 안내가 표시됩니다. 이전 탭이 열려 있으면 새로고침하세요. 생성기 자체에 외부 모델 호출이나 서비스 워커 캐시는 없습니다.
 
 공식 안내:
 - https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site

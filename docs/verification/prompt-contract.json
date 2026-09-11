@@ -1,0 +1,17 @@
+{
+  "kind": "prompt contract and production bundle verification; not generated-game execution",
+  "version": "2.0",
+  "checks": [
+    "22 mandatory sections, 6 order traces and 17 regression cases occur once in all 252 genre/theme exports",
+    "missing anti-deadlock, diagnostics or final-state requirements fail the contract audit",
+    "every genre and theme has English instructions with selected-only contracts",
+    "shared rounds are limited to quiz/bingo/estimate and include bounded unlimited-mode waits",
+    "advanced settings including disabled audio, retry and all actions remain effective",
+    "teacher Unicode, source scopes and template-like text are preserved verbatim without reinterpolation",
+    "unknown/missing/duplicate placeholders fail closed",
+    "built prompt and preview exactly match canonical English source; every inline script parses",
+    "bundled production compiler exports the same prompt as source for each genre/theme",
+    "published example equals current production compilation"
+  ],
+  "passed": true
+}
